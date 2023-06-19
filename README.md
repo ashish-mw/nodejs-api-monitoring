@@ -1,12 +1,10 @@
 # Playing around with prometheus and grafana
 
 ```
-$ nvm use
-$ npm i
-$ npm start
+$ GF_ADMIN_PASSWORD="admin" docker-compose up
 ```
 
-## URLS
+## 1. First hit some URLS
 
 - Quick response
 ```
@@ -22,6 +20,21 @@ $ curl http://localhost:4000/slow
 Pass any status code as param
 ```
 $ curl http://localhost:4000/s/400
+```
+
+## 2. Then load up prometheus - (Optional)
+
+http://localhost:9090/graph
+
+We can see what data we get from the app running on `4000`
+
+## 3. Lastly load up grafana
+
+http://localhost:3333
+
+```
+UN: admin
+PW: admin
 ```
 
 ## References
