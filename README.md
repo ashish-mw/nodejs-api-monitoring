@@ -23,3 +23,8 @@ Pass any status code as param
 ```
 $ curl http://localhost:4000/s/400
 ```
+
+## References
+
+- https://github.com/pavlovdog/grafana-prometheus-node-js-example
+- https://github.com/TomDoesTech/REST-API-Tutorial-Updated/blob/main/src/utils/metrics.ts

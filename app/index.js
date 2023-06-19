@@ -1,8 +1,26 @@
 const express = require('express')
 const expressPino = require("express-pino-logger");
+const responseTime = require("response-time");
 
+const {restResponseTimeHistogram, startMetricsServer} = require('./metrics');
 const logger = require('./logger');
 const app = express();
+
+app.use(
+  responseTime((req, res, time) => {
+    if (req.route.path) {
+      restResponseTimeHistogram.observe(
+        {
+          method: req.method,
+          route: req.route.path,
+          status_code: res.statusCode,
+        },
+        time * 1000
+      );
+    }
+  })
+);
+
 
 app.use(expressPino({
   enabled: true,
@@ -47,8 +65,9 @@ app.use((error, req, res, next) => {
   })
 })
 
-app.listen(4000, () => {
-  logger.info('Server listening on port 4000')
+app.listen(4000, '0.0.0.0', () => {
+  logger.info('App server listening on port 4000')
+  startMetricsServer()
 })
 
 

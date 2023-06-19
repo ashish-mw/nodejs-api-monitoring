@@ -1,0 +1,25 @@
+version: '3'
+services:
+  # metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - '9090:9090'
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - '4000:4000'
+      - '9100:9100'
+    command: 'index.js'
+
+
+volumes:
+  prometheus_data: {}
